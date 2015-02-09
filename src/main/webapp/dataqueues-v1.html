@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html ng-app="intApp">
+<head>
+<meta charset="ISO-8859-1">
+<title>ITM Int Admin</title>
+
+<link rel="stylesheet" type="text/css" href="resources/stylesheet/main.css" />
+<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="resources/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+
+
+</head>
+<body ng-controller="dataqueueController">
+
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a class="navbar-brand" href="./">ITM Int Admin</a></li>
+
+					<li><a href="dataflows-v1.html">Data Flows v1</a></li>
+					<li><a href="dataflows-v2.html">Data Flows v2</a></li>
+					<li><a href="dataqueues-v1.html">Data Queues v1</a></li>
+
+					<li><a href="https://github.com/sergepeter" target="_blank">Sources hosted on Github</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<h1>
+			Data Queue v1
+
+			<button class="btn btn-warning" ng-click="initData()">
+				<span class="glyphicon glyphicon-pencil"></span>  Create Initial Data
+			</button>
+		</h1>
+
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Edit</th>
+					<th>Data Queue</th>
+					<th>Data FLow</th>
+					<th>Status</th>
+					<th>Nb. Waiting Message</th>
+					<th>Nb. Waiting Message Error</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="dataqueue in dataqueues">
+
+					<td>
+						<button class="btn btn-success" ng-click="editDataQueue(dataqueue.id)">
+							<span class="glyphicon glyphicon-pencil"></span>Edit
+						</button>
+						<button class="btn btn-danger" ng-click="deleteDataQueue(dataqueue.id)">
+							<span class="glyphicon glyphicon-pencil"></span>Del
+						</button>
+					</td>
+					<td>{{ dataqueue.name }}</td>
+					<td>{{ dataqueue.intDataFLow.name }}</td>
+					<td>{{ dataqueue.status }}</td>
+					<td>{{ dataqueue.nbWaitingMessage }}</td>
+					<td>{{ dataqueue.nbWaitingMessageError }}</td>
+
+				</tr>
+			</tbody>
+		</table>
+
+		<hr>
+		<button class="btn btn-success" ng-click="createNewDataQueue()">
+			<span class="glyphicon glyphicon-user"></span>  Create New Data Flow
+		</button>
+		<hr>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span ng-hide="edit">Create New Data Queue</span> <span ng-show="edit">Edit Data Queue</span>
+			</div>
+			<div class="panel-body">
+
+				<form class="form-vertical" name="dataQueueForm">
+
+					<div class="control-group">
+						<label class="col-sm-2 control-label">Data Queue:</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" class="form-control" ng-model="dataqueue.name" placeholder="Data Flow" required /> <span ng-show="showError(dataQueueForm.name, 'required')"
+								class="help-block">This field is required</span>&nbsp;
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="col-sm-2 control-label">IT Service Name:</label>
+						<div class="col-sm-10">
+							<select name="dataFlowId" class="form-control" ng-model="dataqueue.intDataFLow.id" ng-options="item.id as item.name for item in dataflows" required>
+								<option value="">-- No Selection --</option>
+							</select> <span ng-show="showError(dataQueueForm.dataFlowId, 'required')" class="help-block">This field is required</span>&nbsp;
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="col-sm-2 control-label">Status:</label>
+						<div class="col-sm-10">
+						<label class="checkbox-inline">
+						  <input type="radio" class="form-control" ng-model="dataqueue.status" value="OK">OK
+						</label>
+						<label class="checkbox-inline">
+						  <input class="form-control" type="radio" ng-model="dataqueue.status" value="KO">KO
+						</label>
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="col-sm-2 control-label">Errors Daily Counter:</label>
+						<div class="col-sm-10">
+							<input name="nbWaitingMessage" type="number" class="form-control" ng-model="dataqueue.nbWaitingMessage" placeholder="0" required> <span
+								ng-show="showError(dataQueueForm.nbWaitingMessage, 'required')" class="help-block">This field is required</span>&nbsp;
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="col-sm-2 control-label">Treated Daily Counter:</label>
+						<div class="col-sm-10">
+							<input name="nbWaitingMessageError" type="number" class="form-control" ng-model="dataqueue.nbWaitingMessageError" placeholder="0" required> <span
+								ng-show="showError(dataQueueForm.nbWaitingMessageError, 'required')" class="help-block">This field is required</span>&nbsp;
+						</div>
+					</div>
+
+				</form>
+				<hr>
+				<button class="btn btn-success" ng-disabled="!canSave()" ng-click="updateDataQueue(dataqueue.id)">
+					<span class="glyphicon glyphicon-save"></span>Save Changes
+				</button>
+
+			</div>
+		</div>
+
+	</div>
+
+
+	<script type="text/javascript" src="resources/js/lib/jquery.js"></script>
+	<script type="text/javascript" src="resources/js/lib/angular.min.js"></script>
+	<script type="text/javascript" src="resources/js/lib/angular-resource.min.js"></script>
+	<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/js/angular/myapp-v3.js"></script>
+
+</body>
+</html>
