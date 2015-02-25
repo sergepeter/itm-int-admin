@@ -12,7 +12,6 @@ import javax.ws.rs.Produces;
 
 import com.masict.itm.data.dao.ITServiceDao;
 import com.masict.itm.data.dao.JpaITServiceDaoImpl;
-import com.masict.itm.data.domain.INTDataQueue;
 import com.masict.itm.data.domain.ITService;
 
 @Path("/itservices")

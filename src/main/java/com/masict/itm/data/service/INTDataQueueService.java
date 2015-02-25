@@ -16,7 +16,6 @@ import javax.ws.rs.core.Response;
 
 import com.masict.itm.data.dao.INTDataQueueDao;
 import com.masict.itm.data.dao.JpaINTDataQueueDaoImpl;
-import com.masict.itm.data.domain.INTDataFlow;
 import com.masict.itm.data.domain.INTDataQueue;
 
 @Path("/dataqueues")
